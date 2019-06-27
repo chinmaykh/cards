@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="CardsApp">
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body ng-controller="CardsController">
+  <script type="text/javascript" src="./angular/angular.min.js"></script>
+
+
+  <div class="row">
+
+    <div class="col s12">
+
+      <nav>
+        <div class="nav-wrapper yellow accent-4">
+          <a href="#" class="brand-logo black-text">New Card</a>
+          <a href="./cards!.html" data-target="mobile-demo"><i class="material-icons">close</i></a>
+        </div>
+      </nav>
+
+    </div>
+
+  </div>
+
+  <div class="row" style="padding: 20px">
+
+    <div class="input-field">
+
+      <input id="first_name" type="text" class="materialize-textarea" ng-model="head">
+
+      <label for="first_name">Heading </label>
+
+      <span class="helper-text">This need not be the question, just a heading for the card</span>
+
+    </div>
+
+    <div class="file-field input-field">
+
+      <div class="btn yellow accent-4">
+
+        <span>Image</span>
+
+        <input type="file" accept="image/*" id="files"> 
+
+      </div>
+
+      <div class="file-path-wrapper">
+
+        <input class="file-path validate" type="text">
+
+      </div>
+
+      <span class="helper-text">A picture of the question or an image supporting it</span>
+
+    </div>
+
+    <p style="font-size: 0.9em">Populate with possible options and select all that apply</p>
+
+    <p style="font-size: 0.9em"> ( Incase of multi-correct ) </p>
+
+    <div class="row" ng-repeat="opt in opts">
+
+      <div class="col s12">
+
+
+        <div class="row">
+
+          <p class="col s1">
+
+            <label>
+
+              <input name="group1" type="checkbox" ng-model="opt.bool" />
+
+              <span></span>
+
+            </label>
+
+          </p>
+
+          <input type="text" class="col s11" ng-model="opt.val">
+
+        </div>
+
+      </div>
+
+      
+
+    </div>
+
+    
+    
+
+
+    <button class="btn yellow accent-4" ng-click="createCard()">Add Card</button>
+
+  </div>
+
+
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript" src="./materialize/js/materialize.js"></script>
+  <script src="./main.js"></script>
+  <script src="./material_init.js"></script>
+</body>
+
+</html>

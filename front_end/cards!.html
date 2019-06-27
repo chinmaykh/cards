@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="CardsApp">
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body ng-controller="CardsController">
+
+
+  <!-- Floating action button -->
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large yellow accent-4">
+      <i class="large material-icons" ng-click="addcard()">edit</i>
+    </a>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col s12">
+      <div class="navbar-fixed">
+
+        <nav>
+          <div class="nav-wrapper yellow accent-4 z-depth-1">
+            <a href="#" class="brand-logo black-text" style="padding-left:20px">Cards</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="sass.html" class="black-text">Sass</a></li>
+              <li class="black-text"><a href="badges.html" class="black-text">Components</a></li>
+              <li class="black-text"><a href="collapsible.html" class="black-text">JavaScript</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul class="sidenav" id="mobile-demo">
+        <li class="yellow accent-4" style="height: 56"> <a style="height:56px ;"><b style="font-size: 1.3em"> Cards
+              !</b></a></li>
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row" ng-repeat="card in cards track by $index">
+
+    <div class="col">
+
+      <div class="card sticky-action z-depth-2" style="height: fit-content">   
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" ng-src={{card.pic}}>
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">{{card.title}}<i
+              class="material-icons right">more_vert</i></span>
+          <p><a href="#">{{card.option}}</a></p>
+
+        </div>
+        <!-- Card Reveal ( Answer )-->
+        <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
+          <span class="card-title grey-text text-darken-4">{{card.title}}<i
+              class="material-icons right">close</i></span>
+          <br>
+          <div class="row">
+            <div class="col s12">
+
+              <div class="row" ng-repeat="num in nums" style="padding-left: 5px">
+
+
+                <p class="col s12 row">
+                  <label class="col">
+                    <input name="group1" type="checkbox" ng-model="(card.qopts)[num]" />
+                    <span style="color: {{resCol[num]}}" ">{{card.ans[num].val}}</span>
+                    <br>
+                  </label>
+                  </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row">
+            <button class="btn yellow accent 4 col s6" style="color: black" ng-click="log($index)" >{{submit[$index]}}</button>
+            <i class="material-icons col s1" style="float: right">delete</i>
+          </div>
+
+          <br>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="./materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="./angular/angular.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="./material_init.js"></script>
+</body>
+
+</html>
