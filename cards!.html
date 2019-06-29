@@ -9,6 +9,8 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--Linking manifest-->
+  <link rel="manifest" href="/manifest.json">
 </head>
 
 <body ng-controller="CardsController">
@@ -55,7 +57,7 @@
 
     <div class="col">
 
-      <div class="card sticky-action z-depth-2" style="height: fit-content">   
+      <div class="card sticky-action z-depth-2" style="height: fit-content">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator" ng-src={{card.pic}}>
         </div>
@@ -79,10 +81,10 @@
                 <p class="col s12 row">
                   <label class="col">
                     <input name="group1" type="checkbox" ng-model="(card.qopts)[num]" />
-                    <span style="color: {{resCol[num]}}" ">{{card.ans[num].val}}</span>
+                    <span style="color: {{resCol[num]}}">{{card.ans[num].val}}</span>
                     <br>
                   </label>
-                  </p>
+                </p>
 
               </div>
 
@@ -91,7 +93,8 @@
           </div>
 
           <div class="row">
-            <button class="btn yellow accent 4 col s6" style="color: black" ng-click="log($index)" >{{submit[$index]}}</button>
+            <button class="btn yellow accent 4 col s6" style="color: black"
+              ng-click="log($index)">{{submit[$index]}}</button>
             <i class="material-icons col s1" style="float: right">delete</i>
           </div>
 
@@ -104,13 +107,19 @@
 
     </div>
 
+  </div>
 
+  <div class="col">
+    <br>
+    <br>
+    <br>
+  </div>
 
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="./materialize/js/materialize.js"></script>
-    <script type="text/javascript" src="./angular/angular.min.js"></script>
-    <script src="./main.js"></script>
-    <script src="./material_init.js"></script>
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript" src="./materialize/js/materialize.js"></script>
+  <script type="text/javascript" src="./angular/angular.min.js"></script>
+  <script src="./main.js"></script>
+  <script src="./material_init.js"></script>
 </body>
 
 </html>

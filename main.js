@@ -12,14 +12,18 @@ var key = Math.floor(Math.random() * 10000);
 
 // PWA fundamentals -- Making a service worker..
 
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', () => {
-//         navigator.serviceWorker
-//             .register('./sw.js')
-//             .then(reg => console.log('Service Worker: Registered'))
-//             .catch(err => console.log('Service Worker: Error' + err))
-//     })
-// }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then(reg => console.log('Service Worker: Registered'))
+            .catch(err => console.log('Service Worker: Error' + err))
+    })
+}
+
+// PWA Prompting user to install app
+
+
 
 
 // Angular Dynamic Binding 
@@ -44,7 +48,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
 
 
 
-    // Card list t
+    // Card list
     var cardList = JSON.parse(localStorage.getItem("cards"));
 
     for (let index = 0; index < cardList.length; index++) {
@@ -110,7 +114,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     $scope.createCard = function () {
         console.log("Creating Card...");
         if (!document.getElementById('files').files[0]) {
-            localStorage.setItem(key, "./front_end/res/img/plce.jpg");
+            localStorage.setItem(key, "./res/img/plce.jpg");
             console.log("No image uploaded")
         }
 

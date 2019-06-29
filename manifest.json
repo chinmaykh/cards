@@ -1,0 +1,20 @@
+{
+    "short_name": "cards",
+    "name": "Cards!",
+    "prefer_related_applications": false,
+    "icons": [
+      {
+        "src": "/res/icons/icons-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/res/icons/icons-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/cards!.html",
+    "background_color": "#ffd600",
+    "display": "standalone"
+  }
