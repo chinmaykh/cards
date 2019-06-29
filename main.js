@@ -15,7 +15,7 @@ var key = Math.floor(Math.random() * 10000);
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-            .register('/sw.js')
+            .register('/cards/sw.js')
             .then(reg => console.log('Service Worker: Registered'))
             .catch(err => console.log('Service Worker: Error' + err))
     })
