@@ -103,7 +103,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     // Link to the new card page
     $scope.addcard = function () {
         console.log('Clicked !');
-        location.replace('/new_card.html')
+        location.replace('/cards/new_card.html')
     }
 
     // Creating the new card as a json obj, appending to array and replacing that in the localStorage
@@ -149,7 +149,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     function rerender() {
         var cardList = JSON.parse(localStorage.getItem("cards"));
         $scope.cards = cardList;
-        location.replace('/cards!.html')
+        location.replace('/cards/cards!.html')
     }
 
 

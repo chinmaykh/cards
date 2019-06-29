@@ -16,5 +16,6 @@
     ],
     "start_url": "/cards!.html",
     "background_color": "#ffd600",
-    "display": "standalone"
+    "display": "standalone",
+    "scope":"/scope/"
   }
