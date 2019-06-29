@@ -14,7 +14,7 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "/cards!.html",
+    "start_url": "/cards/cards!.html",
     "background_color": "#ffd600",
     "display": "standalone",
     "scope":"/scope/"
