@@ -194,7 +194,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
 
         localStorage.removeItem('edit');
 
-
+        rerender();
     }
 
     // Delete card functionality
