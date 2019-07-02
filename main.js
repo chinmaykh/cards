@@ -110,7 +110,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
 
     $scope.nav_edit = function (index) {
         localStorage.setItem('edit', index)
-        location.replace('/edit_card.html');
+        location.replace('/cards/edit_card.html');
     }
 
     // Setting edit item
