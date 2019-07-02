@@ -1,6 +1,6 @@
 {
-    "short_name": "cards",
-    "name": "Cards!",
+    "short_name": "Flash Cards",
+    "name": "Flash Cards!",
     "prefer_related_applications": false,
     "icons": [
       {
@@ -14,8 +14,8 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "/cards/cards!.html",
+    "start_url": "https://chinmaykh.github.io/cards/cards!.html",
     "background_color": "#ffd600",
     "display": "standalone",
-    "scope":"/scope/"
+    "scope":"/"
   }
