@@ -22,7 +22,9 @@ if ('serviceWorker' in navigator) {
 }
 
 // PWA Prompting user to install app
+// It's done !!
 
+var fileChanged = false;
 
 
 
@@ -44,12 +46,10 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         3
     ]
 
-
-
-
-
     // Card list
     var cardList = JSON.parse(localStorage.getItem("cards"));
+
+    // Assigning 0 as default for unchecked box
 
     for (let index = 0; index < cardList.length; index++) {
         cardList[index].qopts =
@@ -78,7 +78,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             false,
             false
         ]
-        $scope.submit[index] = "Submit"
+        $scope.submit[index] = "Check Answers"
     }
 
 
@@ -105,6 +105,16 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         console.log('Clicked !');
         location.replace('/cards/new_card.html')
     }
+
+    // Navigating edit card page, running the script to get the card object
+
+    $scope.nav_edit = function (index) {
+        localStorage.setItem('edit', index)
+        location.replace('/edit_card.html');
+    }
+
+    // Setting edit item
+    $scope.edit_card = cardList[localStorage.getItem('edit')]
 
     // Creating the new card as a json obj, appending to array and replacing that in the localStorage
     // Image processing is frankly a pain...
@@ -146,48 +156,60 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         rerender();
     }
 
+    // Rerendering the scope to accept an changes
     function rerender() {
         var cardList = JSON.parse(localStorage.getItem("cards"));
         $scope.cards = cardList;
         location.replace('/cards/cards!.html')
     }
 
-
+    // Creating Color for showing answer correctness
     $scope.resCol = [];
-    // Submitting responses 
 
-    $scope.log = function (index) {
-        console.log('Index is ' + index);
-        console.log($scope.cards);
-        console.log($scope.cards[index].ans)
-        console.log($scope.cards[index].qopts)
+    // Editing card and creating new card
+    $scope.editCard = function () {
+        var edited = {};
+        edited.title = $scope.edit_card.title;
+        edited.ans = $scope.edit_card.ans;
+        
+        console.log(fileChanged)
 
-        for (let ind = 0; ind < 4; ind++) {
-            if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
-                $scope.resCol[ind] = "green";
-            } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
-                $scope.resCol[ind] = "red";
-            }
+        if(fileChanged){
+            console.log('Change acknowledged')
+            $scope.edit_card.pic = localStorage.getItem(key);
         }
-        var tick = 0;
-        $interval(function resetCol() {
-            tick = tick + 1;
-            if (tick == 5) {
-                for (let count = 0; count < 4; count++) {
-                    $scope.resCol[count] = "";
-                    $scope.cards[index].qopts[count] = false;
-                    $scope.submit[index] = "Submit";
-                }
-            } else {
-                $scope.submit[index] = "Resetting in " + (5 - tick);
-                console.log(tick);
-            }
-        }
-            , 1000, 5);
+        edited.pic = $scope.edit_card.pic
+        
+        fileChanged = false;
+        localStorage.removeItem(key);
+        console.log(edited);
+
+        var ind = localStorage.getItem('edit');
+        
+        var tempList = JSON.parse(localStorage.getItem('cards'))
+
+        tempList[ind] = edited;
+
+        localStorage.setItem('cards',JSON.stringify(tempList));
+
+        localStorage.removeItem('edit');
 
 
     }
 
+    // Delete card functionality
+
+    $scope.deleteCard = function (index) {
+        console.log('Initiaiting delete for element ' +index );
+        var tempList = []
+        tempList  = JSON.parse(localStorage.getItem('cards'))
+        tempList.splice(index,1);
+        localStorage.setItem('cards', JSON.stringify(tempList));
+        rerender();
+    }
+
+    // Reboot
+    
 
     // This is the end !!
 });
@@ -200,6 +222,10 @@ try {
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
+
+    fileChanged = true;
+
+    console.log('File changed')
 
     // Loop through the FileList and render image files as thumbnails.
     for (var i = 0, f; f = files[i]; i++) {
@@ -215,16 +241,12 @@ function handleFileSelect(evt) {
         reader.onload = (function (theFile) {
             return function (e) {
                 // Render thumbnail.
-
                 var e;
-            try {
-                localStorage.setItem(key, e.target.result)      
-            } catch (error) {
-                alert("Picture size exceeds storage space available... upload with lower resolution");
-            }
-             
-
-
+                try {
+                    localStorage.setItem(key, e.target.result)
+                } catch (error) {
+                    alert("Picture size exceeds storage space available... upload with lower resolution");
+                }
             };
         })(f);
 

@@ -4,6 +4,7 @@
 <head>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.css" media="screen,projection" />
 
@@ -19,21 +20,23 @@
   <!-- Floating action button -->
 
   <div class="fixed-action-btn">
-    <a class="btn-floating btn-large yellow accent-4">
-      <i class="large material-icons" ng-click="addcard()">edit</i>
+    <a class="btn-floating btn-large yellow lighten-1">
+      <i class="large material-icons black-text" ng-click="addcard()">add</i>
     </a>
   </div>
 
 
   <div class="row">
-
     <div class="col s12">
       <div class="navbar-fixed">
 
         <nav>
-          <div class="nav-wrapper yellow accent-4 z-depth-1">
-            <a href="#" class="brand-logo black-text" style="padding-left:20px">Cards</a>
-            <!-- <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+          <div class="nav-wrapper yellow lighten-1">
+            <a class="brand-logo black-text">
+              <p style=" margin: 0%">Flash Cards</p>
+            </a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                class="material-icons black-text">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="sass.html" class="black-text">Sass</a></li>
               <li class="black-text"><a href="badges.html" class="black-text">Components</a></li>
@@ -42,71 +45,84 @@
           </div>
         </nav>
       </div>
-      <!-- <ul class="sidenav" id="mobile-demo">
-        <li class="yellow accent-4" style="height: 56"> <a style="height:56px ;"><b style="font-size: 1.3em"> Cards
-              !</b></a></li>
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
-      </ul> -->
+      <ul id="mobile-demo" class="sidenav">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="images/office.jpg">
+            </div>
+            <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+          </div>
+        </li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li>
+          <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      </ul>
     </div>
   </div>
 
   <div class="row" ng-repeat="card in cards track by $index">
+   
+      <div class="col">
+      
+        <div class="card sticky-action z-depth-1" >
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" ng-src={{card.pic}}>
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{card.title}}<i
+                class="material-icons right">more_vert</i></span>
+            <p><a href="#">{{card.option}}</a></p>
 
-    <div class="col">
+          </div>
+          <!-- Card Reveal ( Answer )-->
+          <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
+            <span class="card-title grey-text text-darken-4">{{card.title}}<i
+                class="material-icons right">close</i></span>
+            <br>
+            <div class="row">
+              <div class="col s12">
 
-      <div class="card sticky-action z-depth-2" style="height: fit-content">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" ng-src={{card.pic}}>
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">{{card.title}}<i
-              class="material-icons right">more_vert</i></span>
-          <p><a href="#">{{card.option}}</a></p>
-
-        </div>
-        <!-- Card Reveal ( Answer )-->
-        <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
-          <span class="card-title grey-text text-darken-4">{{card.title}}<i
-              class="material-icons right">close</i></span>
-          <br>
-          <div class="row">
-            <div class="col s12">
-
-              <div class="row" ng-repeat="num in nums" style="padding-left: 5px">
+                <div class="row" ng-repeat="num in nums" style="padding-left: 5px">
 
 
-                <p class="col s12 row">
-                  <label class="col">
-                    <input name="group1" type="checkbox" ng-model="(card.qopts)[num]" />
-                    <span style="color: {{resCol[num]}}">{{card.ans[num].val}}</span>
-                    <br>
-                  </label>
-                </p>
+                  <p class="col s12 row">
+                    <label class="col">
+                      <input name="group1" type="checkbox" ng-model="(card.qopts)[num]"
+                        style="border-right-color:red" />
+                      <span style="color: {{resCol[num]}}">{{card.ans[num].val}}</span>
+                      <br>
+                    </label>
+                  </p>
+
+                </div>
 
               </div>
 
             </div>
 
+            <div class="row">
+              <button class="btn yellow accent 4 col s6" style="color: black"
+                ng-click="log($index)">{{submit[$index]}}</button>
+              <i class="material-icons col s1" style="float: right; color:red" ng-click="deleteCard($index)">delete</i>
+              <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
+            </div>
+
+            <br>
+
+
           </div>
-
-          <div class="row">
-            <button class="btn yellow accent 4 col s6" style="color: black"
-              ng-click="log($index)">{{submit[$index]}}</button>
-            <i class="material-icons col s1" style="float: right">delete</i>
-          </div>
-
-          <br>
-
 
         </div>
-
+      
       </div>
-
-    </div>
-
+  
   </div>
 
   <div class="col">
