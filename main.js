@@ -182,7 +182,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     $scope.createCard = function () {
         console.log("Creating Card...");
         if (!document.getElementById('files').files[0]) {
-            localStorage.setItem(key, "./cards/res/img/plce.jpg");
+            localStorage.setItem(key, "./res/img/plce.jpg");
             console.log("No image uploaded")
         }
           
