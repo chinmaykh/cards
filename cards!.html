@@ -38,7 +38,7 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
                 class="material-icons black-text">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-              
+
             </ul>
           </div>
         </nav>
@@ -50,7 +50,9 @@
               <br>
             </div>
             <a href="#user"><img class="circle" src="res/icons/icons-192.png"></a>
-            <a href="#name"><span class="name black-text"><h5>Flash Cards</h5></span></a>
+            <a href="#name"><span class="name black-text">
+                <h5>Flash Cards</h5>
+              </span></a>
             <hr>
           </div>
         </li>
@@ -65,61 +67,60 @@
   </div>
 
   <div class="row" ng-repeat="card in cards track by $index">
-   
-      <div class="col">
-      
-        <div class="card sticky-action z-depth-1" >
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" ng-src={{card.pic}}>
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">{{card.title}}<i
-                class="material-icons right">more_vert</i></span>
-            <p><a href="#">{{card.option}}</a></p>
 
-          </div>
-          <!-- Card Reveal ( Answer )-->
-          <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
-            <span class="card-title grey-text text-darken-4">{{card.title}}<i
-                class="material-icons right">close</i></span>
-            <br>
-            <div class="row">
-              <div class="col s12">
+    <div class="col">
 
-                <div class="row" ng-repeat="num in nums" style="padding-left: 5px">
+      <div class="card sticky-action z-depth-1">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" ng-src={{card.pic}}>
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">{{card.title}}<i
+              class="material-icons right">more_vert</i></span>
+          <p><a href="#">{{card.option}}</a></p>
+
+        </div>
+        <!-- Card Reveal ( Answer )-->
+        <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
+          <span class="card-title grey-text text-darken-4">{{card.title}}<i
+              class="material-icons right">close</i></span>
+          <br>
+          <div class="row">
+            <div class="col s12">
+
+              <div class="row" ng-repeat="num in nums" style="padding-left: 5px">
 
 
-                  <p class="col s12 row">
-                    <label class="col">
-                      <input name="group1" type="checkbox" ng-model="(card.qopts)[num]"
-                        style="border-right-color:red" />
-                      <span style="color: {{resCol[num]}}">{{card.ans[num].val}}</span>
-                      <br>
-                    </label>
-                  </p>
-
-                </div>
+                <p class="col s12 row">
+                  <label class="col">
+                    <input name="group1" type="checkbox" ng-model="(card.qopts)[num]" style="border-right-color:red" />
+                    <span style="color: {{resCol[num]}}">{{card.ans[num].val}}</span>
+                    <br>
+                  </label>
+                </p>
 
               </div>
 
             </div>
 
-            <div class="row">
-              <button class="btn yellow accent 4 col s6" style="color: black"
-                ng-click="log($index)">{{submit[$index]}}</button>
-              <i class="material-icons col s1" style="float: right; color:red" ng-click="deleteCard($index)">delete</i>
-              <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
-            </div>
-
-            <br>
-
-
           </div>
 
+          <div class="row">
+            <button class="btn yellow accent 4 col s6" style="color: black"
+              ng-click="log($index)">{{submit[$index]}}</button>
+            <i class="material-icons col s1" style="float: right; color:red" ng-click="deleteCard($index)">delete</i>
+            <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
+          </div>
+
+          <br>
+
+
         </div>
-      
+
       </div>
-  
+
+    </div>
+
   </div>
 
   <div class="col">
