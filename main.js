@@ -106,7 +106,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             false,
             false
         ]
-        $scope.submit[index] = "Check Answers"
+        $scope.submit[index] = "Check"
     }
 
 
@@ -128,6 +128,36 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         }
     ]
 
+    $scope.log = function (index) {
+        console.log('Index is ' + index);
+        console.log($scope.cards);
+        console.log($scope.cards[index].ans)
+        console.log($scope.cards[index].qopts)
+
+        for (let ind = 0; ind < 4; ind++) {
+            if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
+                $scope.resCol[ind] = "green";
+            } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
+                $scope.resCol[ind] = "red";
+            }
+        }
+        var tick = 0;
+        $interval(function resetCol() {
+            tick = tick + 1;
+            if (tick == 5) {
+                for (let count = 0; count < 4; count++) {
+                    $scope.resCol[count] = "";
+                    $scope.cards[index].qopts[count] = false;
+                    $scope.submit[index] = "Submit";
+                }
+            } else {
+                $scope.submit[index] = "Resetting in " + (5 - tick);
+                console.log(tick);
+            }
+        }
+            , 1000, 5);
+    }
+
     // Link to the new card page
     $scope.addcard = function () {
         console.log('Clicked !');
@@ -138,7 +168,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
 
     $scope.nav_edit = function (index) {
         localStorage.setItem('edit', index)
-        location.replace('/edit_card.html');
+        location.replace('/cards/edit_card.html');
     }
 
     // Setting edit item
@@ -152,7 +182,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     $scope.createCard = function () {
         console.log("Creating Card...");
         if (!document.getElementById('files').files[0]) {
-            localStorage.setItem(key, "./res/img/plce.jpg");
+            localStorage.setItem(key, "./cards/res/img/plce.jpg");
             console.log("No image uploaded")
         }
           
@@ -194,26 +224,26 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         var edited = {};
         edited.title = $scope.edit_card.title;
         edited.ans = $scope.edit_card.ans;
-        
+
         console.log(fileChanged)
 
-        if(fileChanged){
+        if (fileChanged) {
             console.log('Change acknowledged')
             $scope.edit_card.pic = localStorage.getItem(key);
         }
         edited.pic = $scope.edit_card.pic
-        
+
         fileChanged = false;
         localStorage.removeItem(key);
         console.log(edited);
 
         var ind = localStorage.getItem('edit');
-        
+
         var tempList = JSON.parse(localStorage.getItem('cards'))
 
         tempList[ind] = edited;
 
-        localStorage.setItem('cards',JSON.stringify(tempList));
+        localStorage.setItem('cards', JSON.stringify(tempList));
 
         localStorage.removeItem('edit');
     }
@@ -221,10 +251,10 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     // Delete card functionality
 
     $scope.deleteCard = function (index) {
-        console.log('Initiaiting delete for element ' +index );
+        console.log('Initiaiting delete for element ' + index);
         var tempList = []
-        tempList  = JSON.parse(localStorage.getItem('cards'))
-        tempList.splice(index,1);
+        tempList = JSON.parse(localStorage.getItem('cards'))
+        tempList.splice(index, 1);
         localStorage.setItem('cards', JSON.stringify(tempList));
         rerender();
     }
