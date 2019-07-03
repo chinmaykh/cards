@@ -82,8 +82,8 @@
         </div>
         <!-- Card Reveal ( Answer )-->
         <div class="card-reveal" style="padding-bottom: 0px; padding-top: 8px; ">
-          <span class="card-title grey-text text-darken-4">{{card.title}}<i
-              class="material-icons right">close</i></span>
+          <span class="card-title grey-text text-darken-4">{{card.title}}<i class="material-icons right">close</i>
+          </span>
           <br>
           <div class="row">
             <div class="col s12">
@@ -105,16 +105,14 @@
 
           </div>
 
-          <div class="row">
-            <button class="btn yellow accent 4 col s6" style="color: black"
-              ng-click="log($index)">{{submit[$index]}}</button>
-            <i class="material-icons col s1" style="float: right; color:red" ng-click="deleteCard($index)">delete</i>
-            <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
+          <div class="card-action">
+            <div class="row">
+              <button class="btn yellow accent 4 col s6" style="color: black"
+                ng-click="log($index)">{{submit[$index]}}</button>
+              <i class="material-icons col s1" style="float: right; color:red" ng-click="deleteCard($index)">delete</i>
+              <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
+            </div>
           </div>
-
-          <br>
-
-
         </div>
 
       </div>
@@ -122,6 +120,7 @@
     </div>
 
   </div>
+  
 
   <div class="col">
     <br>

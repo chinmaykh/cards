@@ -7,39 +7,10 @@ if (!check) {
     localStorage.setItem("cards", JSON.stringify([]));
 }
 
-// Chech and use indexeddb
-window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || 
-window.msIndexedDB;
- 
-window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || 
-window.msIDBTransaction;
-window.IDBKeyRange = window.IDBKeyRange || 
-window.webkitIDBKeyRange || window.msIDBKeyRange
- 
-if (!window.indexedDB) {
-   window.alert("Your browser doesn't support a stable version of IndexedDB.")
-} 
-
-const testData = "SCSCSCSCSCSCs";
-var db;
-var request = window.indexedDB.open('test',1)
-
-request.onsuccess = (e)=>{
-    db = request.result;
-    console.log('Successfully Setup db ' + JSON.stringify(db));
-}
-
-request.onerror = (e) =>{
-    console.log('Error seting up db '+e)
-}
-
-
-
 // Random number as key for image 
 var key = Math.floor(Math.random() * 10000);
 
 // PWA fundamentals -- Making a service worker..
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
@@ -49,24 +20,16 @@ if ('serviceWorker' in navigator) {
     })
 }
 
-// PWA Prompting user to install app
-// It's done !!
-
+// Flag to acknowledge file change
 var fileChanged = false;
 
-
-
 // Angular Dynamic Binding 
-
 var CardsApp = angular.module('CardsApp', []);
 
 CardsApp.controller('CardsController', ($scope, $interval) => {
     console.log("Controller loaded !");
 
-
-
     // Place for scope experimentation
-
     $scope.nums = [
         0,
         1,
@@ -78,7 +41,6 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     var cardList = JSON.parse(localStorage.getItem("cards"));
 
     // Assigning 0 as default for unchecked box
-
     for (let index = 0; index < cardList.length; index++) {
         cardList[index].qopts =
             [
@@ -109,7 +71,6 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         $scope.submit[index] = "Check"
     }
 
-
     // Assigning values for new card responses as default false
     $scope.opts = [
         {
@@ -128,34 +89,43 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         }
     ]
 
-    $scope.log = function (index) {
-        console.log('Index is ' + index);
-        console.log($scope.cards);
-        console.log($scope.cards[index].ans)
-        console.log($scope.cards[index].qopts)
+    // Declaring a flag to prevent click when already click is acknowledged
+    var disableBtn = false;
 
-        for (let ind = 0; ind < 4; ind++) {
-            if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
-                $scope.resCol[ind] = "green";
-            } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
-                $scope.resCol[ind] = "red";
-            }
-        }
-        var tick = 0;
-        $interval(function resetCol() {
-            tick = tick + 1;
-            if (tick == 5) {
-                for (let count = 0; count < 4; count++) {
-                    $scope.resCol[count] = "";
-                    $scope.cards[index].qopts[count] = false;
-                    $scope.submit[index] = "Submit";
+    // Verifying answers
+    $scope.log = function (index) {
+
+        if (!disableBtn) {
+
+            disableBtn = true;
+            console.log('Index is ' + index);
+            console.log($scope.cards);
+            console.log($scope.cards[index].ans)
+            console.log($scope.cards[index].qopts)
+
+            for (let ind = 0; ind < 4; ind++) {
+                if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
+                    $scope.resCol[ind] = "green";
+                } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
+                    $scope.resCol[ind] = "red";
                 }
-            } else {
-                $scope.submit[index] = "Resetting in " + (5 - tick);
-                console.log(tick);
             }
+            var tick = 0;
+            $interval(function resetCol() {
+                tick = tick + 1;
+                if (tick == 5) {
+                    for (let count = 0; count < 4; count++) {
+                        $scope.resCol[count] = "";
+                        $scope.cards[index].qopts[count] = false;
+                        $scope.submit[index] = "Submit";
+                        disableBtn = false;
+                    }
+                } else {
+                    $scope.submit[index] = "Resetting in " + (5 - tick);
+                    console.log(tick);
+                }
+            }, 1000, 5);
         }
-            , 1000, 5);
     }
 
     // Link to the new card page
@@ -185,7 +155,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             localStorage.setItem(key, "./res/img/plce.jpg");
             console.log("No image uploaded")
         }
-          
+
         // New card object 
         new_card = {
             "title": $scope.head,
@@ -213,7 +183,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     function rerender() {
         var cardList = JSON.parse(localStorage.getItem("cards"));
         $scope.cards = cardList;
-        location.replace('/cards/cards!.html')
+        location.replace('./cards!.html')
     }
 
     // Creating Color for showing answer correctness
@@ -261,8 +231,6 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         rerender();
     }
 
-    // Reboot
-
 
     // This is the end !!
 });
@@ -296,7 +264,42 @@ function handleFileSelect(evt) {
                 // Render thumbnail.
                 var e;
                 try {
+
+
+                    // Chech and use indexeddb
+                    // window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ||
+                    //     window.msIndexedDB;
+
+                    // window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction ||
+                    //     window.msIDBTransaction;
+                    // window.IDBKeyRange = window.IDBKeyRange ||
+                    //     window.webkitIDBKeyRange || window.msIDBKeyRange
+
+                    // if (!window.indexedDB) {
+                    //     window.alert("Your browser doesn't support a stable version of IndexedDB.")
+                    // }
+
+                    // var db;
+                    // var request = window.indexedDB.open('test', 3)
+
+                    // request.onsuccess = (e) => {
+                    //     db = request.result;
+                    //     var obje = {
+                    //         'id':key,
+                    //         'pic':e.target.result
+                    //     }
+                    //     var objectStore = db.createObjectStore("image", { keyPath: "id" });
+
+                    //     objectStore.add(obje);
+                    //     console.log('Successfully Setup db ' + JSON.stringify(db));
+                    // }
+
+                    // request.onerror = (e) => {
+                    //     console.log('Error seting up db ' + e)
+                    // }
+
                     localStorage.setItem(key, e.target.result)
+                    
                 } catch (error) {
                     alert("Picture size exceeds storage space available... upload with lower resolution");
                 }
