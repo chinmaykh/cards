@@ -7,6 +7,34 @@ if (!check) {
     localStorage.setItem("cards", JSON.stringify([]));
 }
 
+// Chech and use indexeddb
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || 
+window.msIndexedDB;
+ 
+window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || 
+window.msIDBTransaction;
+window.IDBKeyRange = window.IDBKeyRange || 
+window.webkitIDBKeyRange || window.msIDBKeyRange
+ 
+if (!window.indexedDB) {
+   window.alert("Your browser doesn't support a stable version of IndexedDB.")
+} 
+
+const testData = "SCSCSCSCSCSCs";
+var db;
+var request = window.indexedDB.open('test',1)
+
+request.onsuccess = (e)=>{
+    db = request.result;
+    console.log('Successfully Setup db ' + JSON.stringify(db));
+}
+
+request.onerror = (e) =>{
+    console.log('Error seting up db '+e)
+}
+
+
+
 // Random number as key for image 
 var key = Math.floor(Math.random() * 10000);
 
@@ -127,13 +155,8 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             localStorage.setItem(key, "./res/img/plce.jpg");
             console.log("No image uploaded")
         }
-
-        // Check for indexeddb support 
-        'use strict';
-
+          
         // New card object 
-
-
         new_card = {
             "title": $scope.head,
             "pic": localStorage.getItem(key),
@@ -193,8 +216,6 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
         localStorage.setItem('cards',JSON.stringify(tempList));
 
         localStorage.removeItem('edit');
-
-
     }
 
     // Delete card functionality
@@ -209,7 +230,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     }
 
     // Reboot
-    
+
 
     // This is the end !!
 });
