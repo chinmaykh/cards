@@ -66,11 +66,11 @@
     </div>
   </div>
 
-  <div class="row" ng-repeat="card in cards track by $index">
+  <div class="row" >
 
-    <div class="col">
+    <div class="col" ng-repeat="card in cards track by $index">
 
-      <div class="card sticky-action z-depth-1">
+      <div class="card sticky-action z-depth-1" style="display:block;overflow: auto;">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator" ng-src={{card.pic}}>
         </div>

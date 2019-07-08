@@ -17,5 +17,6 @@
     "start_url": "https://chinmaykh.github.io/cards/cards!.html",
     "background_color": "#ffd600",
     "display": "standalone",
-    "scope":"/"
+    "scope":"/",
+    "theme_color": "#c7a500"
   }
