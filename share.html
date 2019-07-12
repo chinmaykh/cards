@@ -13,6 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!--Linking manifest-->
   <link rel="manifest" href="/cards/manifest.json">
+  <title>Cards | Edit Card</title>
 </head>
 
 <body ng-controller="CardsController">
@@ -26,8 +27,8 @@
       <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper yellow lighten-1">
-          <a href="#" class="brand-logo black-text">New Card</a>
-          <a href="./cards!.html" data-target="mobile-demo" ><i class="material-icons black-text">close</i></a>
+          <a href="#" class="black-text brand-logo"><p style="margin: 0%; font-weight:230;">Edit Card</p></a>
+          <a href="./cards!.html" data-target="mobile-demo" class="left" style="padding-left: 10px"><i class="large material-icons black-text">close</i></a>
         </div>
       </nav>
     </div>
@@ -39,19 +40,19 @@
 
     <div class="input-field">
 
-      <input id="first_name" type="text" class="materialize-textarea" ng-model="head">
+      <input id="first_name" type="text" class="materialize-textarea" ng-model="edit_card.title" value="edit_card.title">
 
       <label for="first_name">Heading </label>
 
-      <span class="helper-text">May/ May not be the question... Something snappy which helps you recollect</span>
+      <span class="helper-text">This need not be the question, just a heading for the card</span>
 
     </div>
 
     <div class="file-field input-field">
 
-      <div class="btn yellow lighten-1 black-text">
+      <div class="btn yellow lighten-1">
 
-        <span>Image</span>
+        <span class="black-text">Image</span>
 
         <input type="file" accept="image/*" id="files"> 
 
@@ -59,25 +60,25 @@
 
       <div class="file-path-wrapper">
 
-        <input class="file-path validate" type="text">
+        <input class="file-path validate" type="text" value="{{edit_card.pic}}">
 
       </div>
+
+    <img src="{{edit_card.pic}}" style="width: 15em">
+
 
       <span class="helper-text">A picture of the question or an image supporting it</span>
 
     </div>
 
-    
-
-
     <p style="font-size: 0.9em">Populate with possible options and select all that apply</p>
 
     <p style="font-size: 0.9em"> ( Incase of multi-correct ) </p>
 
-    <div class="row" ng-repeat="opt in opts">
+    <div class="row" ng-repeat="opt in edit_card.ans">
 
       <div class="col s12">
-
+    
 
         <div class="row">
 
@@ -94,11 +95,17 @@
           </p>
 
           <input type="text" class="col s11" ng-model="opt.val">
+
         </div>
+
       </div>
+
+      
+
     </div>
 
-    <button class="btn yellow lighten-1 black-text" ng-click="createCard()">Add Card</button>
+
+    <button class="btn yellow lighten-1 black-text" ng-click="editCard()">SAVE CHANGES</button>
 
   </div>
 

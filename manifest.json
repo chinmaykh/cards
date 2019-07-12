@@ -2,6 +2,7 @@
     "short_name": "Flash Cards",
     "name": "Flash Cards!",
     "prefer_related_applications": false,
+    "version":1.4,
     "icons": [
       {
         "src": "/cards/res/icons/icons-192.png",

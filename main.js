@@ -103,7 +103,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             console.log($scope.cards[index].ans)
             console.log($scope.cards[index].qopts)
 
-            for (let ind = 0; ind < 4; ind++) {
+            for (let ind = 0; ind < 2; ind++) {
                 if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
                     $scope.resCol[ind] = "green";
                 } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
@@ -113,7 +113,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             var tick = 0;
             $interval(function resetCol() {
                 tick = tick + 1;
-                if (tick == 5) {
+                if (tick == 3) {
                     for (let count = 0; count < 4; count++) {
                         $scope.resCol[count] = "";
                         $scope.cards[index].qopts[count] = false;
@@ -121,10 +121,10 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
                         disableBtn = false;
                     }
                 } else {
-                    $scope.submit[index] = "Resetting in " + (5 - tick);
+                    $scope.submit[index] = "Resetting in " + (3 - tick);
                     console.log(tick);
                 }
-            }, 1000, 5);
+            }, 1000, 3);
         }
     }
 
