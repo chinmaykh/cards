@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!--Linking manifest-->
   <link rel="manifest" href="/cards/manifest.json">
-  <title>Cards | Share Card</title>
+  <title>Cards | Add Card</title>
 </head>
 
 <body ng-controller="CardsController">
@@ -28,7 +28,7 @@
       <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper yellow lighten-1">
-            <a href="#" class="black-text" style="font-size: 1.5em; padding-left:10px">Share Card</a>
+            <a href="#" class="black-text" style="font-size: 2em; padding-left:10px">Add Card</a>
             <a href="./cards!.html" data-target="mobile-demo" class="left" style="padding-left: 10px"><i
                 class="large material-icons black-text">close</i></a>
           </div>
@@ -41,30 +41,24 @@
   <!-- PAGE CONTENT-->
   <div class="row">
     <div class="col s12 " style="height:50%">
-        <ul class="collection">
-            <li class="collection-item">Public Sharing
-              <div class="secondary-content">
-                  <div class="switch">
-                      <label>
-                        <input type="checkbox">
-                        <span class="lever"></span>
-                      </label>
-                    </div>
-              </div>
-              <br>
-              <p>
-                This card will be viewable to everyone and creator's name will be shown
-              </p>
-            </li>
-            <li class="collection-item">
-              Private Sharing
-              <i class="material-icons secondary-content" style="padding-right: 20px" ng-click="share()">share</i>
-              <br>
-              <p>
-                Cards can be shared through any of your messengers !
-              </p>
-            </li>
-          </ul>
+        <br>
+      <div class="card center-align activator">
+        <i class="material-icons circle activator" style="font-size: 12em">move_to_inbox</i>
+        <h5 class="activator">Accept a shared card </h5>
+        <div class="card-reveal activator row">
+                <span class="card-title grey-text text-darken-4 col s11">To accept a shared card<i class="material-icons col s1">close</i></span>
+                <br>
+                <br>
+                <p style="font-size: 1.2em">
+                    To accept a card shared to you, just open the link shared with you.
+                </p>
+        </div>
+      </div>
+      <br>
+      <div class="card center-align" onclick="location.replace('/cards/new_card.html')">
+        <i class="material-icons circle" style="font-size: 12em">add</i>
+        <h5>Create a New Card</h5>
+      </div>
     </div>
   </div>
 

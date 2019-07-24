@@ -4,7 +4,7 @@
 <head>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="./materialize/css/materialize.css" media="screen,projection" />
@@ -25,12 +25,13 @@
   </div>
 
   <!--Main Grid-->
-  <div class="row" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+  <div class="row"
+    style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
     <div class="col s12">
       <div class="navbar-fixed">
         <nav class="nav-wrapper yellow lighten-1">
           <div>
-            <a class="center black-text" style="font-family: 'Roboto Mono'; font-size: 1.8em" >
+            <a class="center black-text" style="font-family: 'Roboto Mono'; font-size: 1.8em">
               Flash Cards
             </a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
@@ -64,15 +65,18 @@
     </div>
   </div>
 
-  <div class="row" >
+  <div class="row">
 
-    <div class="col" ng-repeat="card in cards track by $index" >
+    <div class="col" ng-repeat="card in cards track by $index">
 
-      <div class="card sticky-action z-depth-1" style="display:block; height: auto;">
-        <div class="card-image waves-effect waves-block waves-light center" style="text-align:-webkit-center">
-          <img class="activator" ng-src={{card.pic}} style="width:80%">
+      <div class="card sticky-action z-depth-2 activator" style="display:block; min-height: 360px;">
+        <br>
+        <div class="card-image waves-effect waves-block waves-light center" style="text-align:-webkit-center"
+          ng-click="expand($index)" onclick="expand($index)">
+          <img class="responsive-image activator" ng-src={{card.pic}} >
         </div>
-        <div class="card-content">
+        <div class="card-content activator">
+          <br>
           <span class="card-title activator grey-text text-darken-4" style="font-size: 1.4em">{{card.title}}
             <i class="material-icons right">more_vert</i></span>
           <p><a href="#">{{card.option}}</a></p>
@@ -104,11 +108,13 @@
           </div>
 
           <div class="card-action">
-            <div class="row">
-              <button class="btn yellow accent 4 col s6" style="color: black; overflow:auto;"
-                ng-click="log($index)">{{submit[$index]}}</button>
-              <i class="material-icons col s1 modal-trigger" data-target="modal1" style="float: right; color:red" onclick="localStorage.setItem('rn',$index)">delete</i>
-              <i class="material-icons col s3" style="float: right" ng-click="nav_edit($index)">edit</i>
+            <div class="row center">
+              <button class="btn yellow accent 4 col s6" style="color: black; overflow:auto;"ng-click="log($index)">{{submit[$index]}}</button>
+              <i class="material-icons col s2 blue-text" ng-click="nav_share($index)" >share</i>
+              <i class="material-icons col s2" ng-click="nav_edit($index)">edit</i>
+              <i class="material-icons col s2 modal-trigger red-text" data-target="modal1"
+                onclick="localStorage.setItem('rn',$index)">delete</i>
+
             </div>
           </div>
         </div>
@@ -118,7 +124,7 @@
     </div>
 
   </div>
-  
+
 
   <div class="col">
     <br>
@@ -128,21 +134,28 @@
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal center">
-      <div class="modal-content red white-text">
-        <h4>Delete ?</h4>
-      </div>
-      <div style="text-align: center">
-        <i class="material-icons modal-close " data-target="modal1" style=" color:red; font-size: 15em" ng-click="deleteCard(localStorage.getItem('rn'))">delete</i>
-      </div>
+    <div class="modal-content red white-text">
+      <h4>Delete ?</h4>
     </div>
-            
-  
+    <div style="text-align: center">
+      <i class="material-icons modal-close " data-target="modal1" style=" color:red; font-size: 15em"
+        ng-click="deleteCard(localStorage.getItem('rn'))">delete</i>
+    </div>
+  </div>
+
+
 
   <!--JavaScript at end of body for optimized loading-->
   <script type="text/javascript" src="./materialize/js/materialize.js"></script>
   <script type="text/javascript" src="./angular/angular.min.js"></script>
   <script src="./main.js"></script>
   <script src="./material_init.js"></script>
+  <script>
+    function expand(num) {
+      document.getElementById('box'+num).click();
+      
+    }
+  </script>
 </body>
 
 </html>

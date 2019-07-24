@@ -40,7 +40,9 @@ self.addEventListener('fetch',e=>{
             .open(cacheName)
             .then(cache=>{
                  // Add response to cache
-                 cache.put(e.request, resClone);
+                    cache
+                    .put(e.request, resClone)
+            .catch((e)=>{/* Do nothing */})
             });
             return res;    
         }). catch(err => caches.match(e.request).then(res => res))

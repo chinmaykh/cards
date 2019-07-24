@@ -26,7 +26,50 @@ var fileChanged = false;
 // Angular Dynamic Binding 
 var CardsApp = angular.module('CardsApp', []);
 
-CardsApp.controller('CardsController', ($scope, $interval) => {
+// Angular file directive
+CardsApp.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+CardsApp.service('fileUpload', ['$http', function ($http) {
+
+    this.uploadFileToUrl = function (file) {
+        var fd = new FormData();
+        fd.append('file', file);
+        $http.post('/pics/add', fd, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(function mySuccess(response) {
+            $http({
+                method: "POST",
+                url: "/api/class/",
+                data: activeGrp
+            }).then((result) => {
+                // What do i do with the result ?
+                console.log("Successfully transacted the message ....");
+            }, (result) => {
+                alert("Some error geting messages");
+            })
+        }, function myError(response) {
+            console.log(response.data);
+        });
+    }
+
+}]);
+
+CardsApp.controller('CardsController', ($scope, $interval, $http) => {
     console.log("Controller loaded !");
 
     // Place for scope experimentation
@@ -103,7 +146,7 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
             console.log($scope.cards[index].ans)
             console.log($scope.cards[index].qopts)
 
-            for (let ind = 0; ind < 2; ind++) {
+            for (let ind = 0; ind < 4; ind++) {
                 if ($scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) {
                     $scope.resCol[ind] = "green";
                 } else if ((!$scope.cards[index].ans[ind].bool && $scope.cards[index].qopts[ind]) || ($scope.cards[index].ans[ind].bool && !$scope.cards[index].qopts[ind])) {
@@ -131,11 +174,40 @@ CardsApp.controller('CardsController', ($scope, $interval) => {
     // Link to the new card page
     $scope.addcard = function () {
         console.log('Clicked !');
-        location.replace('/cards/new_card.html')
+        location.replace('/cards/add_card.html')
+    }
+
+    // Navigating to share 
+    $scope.nav_share = function (index) {
+        localStorage.setItem('share', index);
+        location.replace('/cards/share.html');;
+    }
+
+    // Try to adjust scope for name of card 
+    try {
+        $scope.share_head = JSON.parse(localStorage.getItem('cards'))[localStorage.getItem('share')].title
+    } catch (err) { }
+
+    // Share
+
+    $scope.share = function () {
+        tempCard = JSON.parse(localStorage.getItem('cards'))[localStorage.getItem('share')]
+        $http.post('http://192.168.0.109:1000/api/add/priv_cards',
+        {
+            "title":tempCard.title,
+            "pic":"/card",
+            "ans":tempCard.ans,
+            "crId":"Chin89"
+        }
+        ).then((res=>{
+            console.log(res.data)
+        },(res)=>{
+            console.log(res.data)
+
+        }))
     }
 
     // Navigating edit card page, running the script to get the card object
-
     $scope.nav_edit = function (index) {
         localStorage.setItem('edit', index)
         location.replace('/cards/edit_card.html');
@@ -299,7 +371,7 @@ function handleFileSelect(evt) {
                     // }
 
                     localStorage.setItem(key, e.target.result)
-                    
+
                 } catch (error) {
                     alert("Picture size exceeds storage space available... upload with lower resolution");
                 }
